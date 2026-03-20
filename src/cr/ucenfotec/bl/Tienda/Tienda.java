@@ -1,19 +1,26 @@
 package cr.ucenfotec.bl.Tienda;
 
 import cr.ucenfotec.bl.ArbolProductos.ArbolProductos;
+import cr.ucenfotec.bl.Cliente.ColaClientes;
 import cr.ucenfotec.bl.Productos.Producto;
 
 public class Tienda {
 
     private ArbolProductos inventario;
+    private ColaClientes colaClientes;
 
     public Tienda() {
         inventario = new ArbolProductos();
+        colaClientes = new ColaClientes();
     }
 
     // Getter
     public ArbolProductos getInventario() {
         return inventario;
+    }
+
+    public ColaClientes getColaClientes() {
+        return colaClientes;
     }
 
     // 1. Agregar producto
@@ -70,5 +77,13 @@ public class Tienda {
         return true;
     }
 
+    public void aumentarStock(String nombre, int cantidad) {
+        boolean resultado = inventario.aumentarStock(nombre, cantidad);
 
+        if (resultado) {
+            System.out.println("Stock aumentado correctamente");
+        } else {
+            System.out.println("Producto no encontrado");
+        }
+    }
 }

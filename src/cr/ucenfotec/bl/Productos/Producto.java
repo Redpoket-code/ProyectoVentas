@@ -24,6 +24,8 @@ public class Producto {
         this.fechaVencimiento = fechaVencimiento;
         listaImagenes = new ArrayList<>();
         this.siguiente = null;
+        this.izquierdo = null;
+        this.derecho = null;
     }
 
     public Producto(String nombre, double precio, String categoria, int cantidad){
@@ -33,6 +35,8 @@ public class Producto {
         this.cantidad = cantidad;
         listaImagenes = new ArrayList<>();
         this.siguiente = null;
+        this.izquierdo = null;
+        this.derecho = null;
     }
 
     //Getters
@@ -136,7 +140,7 @@ public class Producto {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Nombre: ").append(nombre).append("\n");
+        sb.append("\nNombre: ").append(nombre).append("\n");
         sb.append("Precio: $").append(String.format("%.2f", precio)).append("\n");
         sb.append("Categoría: ").append(categoria).append("\n");
         sb.append("Fecha Vencimiento: ").append(fechaVencimiento).append("\n");

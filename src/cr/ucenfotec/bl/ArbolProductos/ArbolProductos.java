@@ -17,18 +17,25 @@ public class ArbolProductos {
     // INSERTAR
     public void insertar(Producto nuevo) {
         raiz = insertarRecursivo(raiz, nuevo);
-        System.out.println("Producto insertado en el árbol");
     }
 
     private Producto insertarRecursivo(Producto actual, Producto nuevo) {
+
         if (actual == null) {
+            System.out.println("Producto insertado correctamente.");
             return nuevo;
         }
 
-        if (nuevo.getNombre().compareToIgnoreCase(actual.getNombre()) < 0) {
+        int comparacion = nuevo.getNombre().compareToIgnoreCase(actual.getNombre());
+
+        if (comparacion < 0) {
             actual.setIzquierdo(insertarRecursivo(actual.getIzquierdo(), nuevo));
-        } else {
+
+        } else if (comparacion > 0) {
             actual.setDerecho(insertarRecursivo(actual.getDerecho(), nuevo));
+
+        } else {
+            System.out.println("El producto ya existe en el inventario.");
         }
 
         return actual;
@@ -56,7 +63,7 @@ public class ArbolProductos {
     // RECORRIDO INORDEN (ordenado)
     public void mostrarInOrden() {
         if (estaVacio()) {
-            System.out.println("El árbol está vacío");
+            System.out.println("El inventario está vacío");
             return;
         }
         inOrden(raiz);
@@ -68,5 +75,16 @@ public class ArbolProductos {
             System.out.println(actual);
             inOrden(actual.getDerecho());
         }
+    }
+
+    public boolean aumentarStock(String nombre, int cantidad) {
+        Producto producto = buscar(nombre);
+
+        if (producto == null) {
+            return false;
+        }
+
+        producto.setCantidad(producto.getCantidad() + cantidad);
+        return true;
     }
 }

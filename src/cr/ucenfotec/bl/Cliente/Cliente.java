@@ -33,8 +33,18 @@ public class Cliente {
         carrito = new ListaProductos();
     }
 
-    public void agregarProductoAlCarrito(Producto producto){
-        carrito.insertarProductoFinal(producto);
+    public void agregarProductoAlCarrito(Producto producto, int cantidadDeseada){
+        if(cantidadDeseada <= 0){
+            System.out.println("Cantidad inválida");
+            return;
+        }
+        Producto copia = new Producto(
+                producto.getNombre(),
+                producto.getPrecio(),
+                producto.getCategoria(),
+                cantidadDeseada
+        );
+        carrito.insertarProductoFinal(copia);
     }
 
     public void mostrarCarrito(){

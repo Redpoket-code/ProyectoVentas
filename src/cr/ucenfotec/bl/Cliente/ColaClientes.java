@@ -3,6 +3,8 @@ package cr.ucenfotec.bl.Cliente;
 import cr.ucenfotec.bl.Productos.Producto;
 import cr.ucenfotec.bl.Tienda.Tienda;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class ColaClientes {
@@ -52,16 +54,54 @@ public class ColaClientes {
 
     public void atenderCliente(Tienda tienda){
 
-        Cliente cliente = desencolar();
+        Cliente cliente = verPrimero();
 
         if(cliente == null){
             System.out.println("No hay clientes en la cola");
             return;
         }
 
-        cliente.generarFactura();
+        System.out.println("\n=== Cliente a atender ===");
+        System.out.println("Nombre: " + cliente.getNombre());
+        System.out.println("Prioridad: " + cliente.getPrioridad());
+
+        System.out.println("\n--- Carrito ---");
+        cliente.mostrarCarrito();
+
+        try {
+            BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+
+            System.out.println("\n1. Confirmar compra");
+            System.out.println("2. Cancelar compra");
+            System.out.print("Seleccione una opcion: ");
+            int opcion = Integer.parseInt(entrada.readLine());
+
+            if(opcion == 2){
+                desencolar(); // eliminar cliente de la cola
+                System.out.println("Compra cancelada. Cliente eliminado de la cola.");
+                return;
+            }
+
+        } catch (Exception e){
+            System.out.println("Error en la entrada. Cancelando operación.");
+            return;
+        }
 
         Producto temp = cliente.getCarrito().getPrimero();
+
+        while(temp != null){
+            if(!tienda.hayStock(temp.getNombre(), temp.getCantidad())){
+                System.out.println("Error en inventario. No hay suficiente stock.");
+                return;
+            }
+            temp = temp.getSiguiente();
+        }
+
+        cliente = desencolar();
+
+        cliente.generarFactura();
+
+        temp = cliente.getCarrito().getPrimero();
 
         while(temp != null){
             tienda.reducirStock(temp.getNombre(), temp.getCantidad());
