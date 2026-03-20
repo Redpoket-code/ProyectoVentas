@@ -234,15 +234,44 @@ public class ListaProductos {
 
         System.out.print("Nombre: ");
         String nombre = entrada.readLine();
+        //Validar que no esté vació.
+        while (nombre.trim().isEmpty()) {
+            System.out.print("El nombre no puede estar vacío. Intente de nuevo: ");
+            nombre = entrada.readLine();
+        }
 
         System.out.print("Precio: ");
-        double precio = Double.parseDouble(entrada.readLine());
+        double precio;
+        do {
+            System.out.print("Precio: ");
+            try {
+                precio = Double.parseDouble(entrada.readLine());
+                if (precio <= 0) {
+                    System.out.println("El precio debe ser mayor a 0.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Ingrese un número válido.");
+                precio = -1;
+            }
+        } while (precio <= 0);
 
         System.out.print("Categoría: ");
         String categoria = entrada.readLine();
 
         System.out.print("Cantidad en inventario: ");
-        int cantidad = Integer.parseInt(entrada.readLine());
+        int cantidad;
+        do {
+            System.out.print("Cantidad en inventario: ");
+            try {
+                cantidad = Integer.parseInt(entrada.readLine());
+                if (cantidad < 0) {
+                    System.out.println("La cantidad no puede ser negativa.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Ingrese un número válido.");
+                cantidad = -1;
+            }
+        } while (cantidad < 0);
 
         System.out.print("¿Tiene fecha de vencimiento? (s/n): ");
         String respuesta = entrada.readLine();
