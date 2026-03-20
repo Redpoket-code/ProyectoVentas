@@ -1,7 +1,7 @@
 package cr.ucenfotec.ui;
 
-import cr.ucenfotec.Productos.ListaProductos;
-import cr.ucenfotec.Productos.Producto;
+import cr.ucenfotec.bl.Productos.ListaProductos;
+import cr.ucenfotec.bl.Productos.Producto;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package cr.ucenfotec.Productos;
+package cr.ucenfotec.bl.Productos;
 
 import java.io.BufferedReader;
 import java.io.IOException;
