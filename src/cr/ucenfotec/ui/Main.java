@@ -1,7 +1,9 @@
 package cr.ucenfotec.ui;
 
+import cr.ucenfotec.bl.ArbolProductos.ArbolProductos;
 import cr.ucenfotec.bl.Productos.ListaProductos;
 import cr.ucenfotec.bl.Productos.Producto;
+import cr.ucenfotec.bl.Tienda.Tienda;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,6 +13,7 @@ public class Main {
 
     private static BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
     private static ListaProductos listaProductos = new ListaProductos();
+    private static Tienda tienda = new Tienda();
 
     public static void main(String[] args) throws IOException {
         menuPrincipal();
@@ -39,27 +42,26 @@ public class Main {
                 switch (opcion) {
                     case 1:
                         nuevo = listaProductos.crearProducto();
-                        listaProductos.insertarProductoInicio(nuevo);
+                        tienda.agregarProducto(nuevo);
                         break;
                     case 2:
+                        //Pendiente Modificar
                         nuevo = listaProductos.crearProducto();
-                        listaProductos.insertarProductoFinal(nuevo);
+                        tienda.agregarProducto(nuevo);
                         break;
                     case 3:
-                        listaProductos.mostrarLista();
+                        tienda.mostrarInventario();
                         break;
                     case 4:
-                        if (listaProductos.estaVacia()) {
-                            System.out.println("No hay productos para buscar.");
-                            break;
-                        }
-
                         System.out.print("Nombre del producto a buscar: ");
                         nombre = entrada.readLine();
-                        Producto encontrado = listaProductos.buscarProducto(nombre);
 
-                        if(encontrado != null){
+                        Producto encontrado = tienda.buscarProducto(nombre);
+
+                        if (encontrado != null) {
                             System.out.println(encontrado);
+                        } else {
+                            System.out.println("Producto no encontrado");
                         }
                         break;
                     case 5:

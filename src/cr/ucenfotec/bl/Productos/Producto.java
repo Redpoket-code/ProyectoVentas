@@ -12,6 +12,8 @@ public class Producto {
     private String fechaVencimiento;
     private ArrayList<String> listaImagenes;
     private Producto siguiente;
+    private Producto izquierdo;
+    private Producto derecho;
 
     //Constructor
     public Producto(String nombre, double precio, String categoria,String fechaVencimiento, int cantidad){
@@ -62,6 +64,14 @@ public class Producto {
         return siguiente;
     }
 
+    public Producto getIzquierdo() {
+        return izquierdo;
+    }
+
+    public Producto getDerecho() {
+        return derecho;
+    }
+
     //Setters
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -85,6 +95,14 @@ public class Producto {
 
     public void setSiguiente(Producto siguiente) {
         this.siguiente = siguiente;
+    }
+
+    public void setIzquierdo(Producto izquierdo) {
+        this.izquierdo = izquierdo;
+    }
+
+    public void setDerecho(Producto derecho) {
+        this.derecho = derecho;
     }
 
     //Metodos
