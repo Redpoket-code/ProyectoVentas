@@ -20,8 +20,6 @@ public class Grafo {
     public void agregarArista(String origen, String nuevoDestino, int pesoArista) {
         agregarVertice(origen);// el agl se asegura de agrega los vértices si son nuevos
         agregarVertice(nuevoDestino);
-        //listaAdyacencia.putIfAbsent(origen, new ArrayList<>());
-        //listaAdyacencia.putIfAbsent(nuevoDestino, new ArrayList<>());
 
         //El alg agregar la arista a ambos vértices involucrados
         listaAdyacencia.get(origen).add(new Arista(nuevoDestino, pesoArista));
@@ -84,5 +82,22 @@ public class Grafo {
         }
 
         return new ArrayList<>();
+    }
+
+    public void mostrarSoloUbicaciones() {
+        System.out.println("\n--- UBICACIONES REGISTRADAS ---");
+        int contador = 1;
+        for (String nombre : listaAdyacencia.keySet()) {
+            System.out.println(contador + ". " + nombre);
+            contador++;
+        }
+    }
+
+    public boolean existeUbicacion(String nombre) {
+        return listaAdyacencia.containsKey(nombre);
+    }
+
+    public Map<String, List<Arista>> getListaAdyacencia() {
+        return listaAdyacencia;
     }
 }

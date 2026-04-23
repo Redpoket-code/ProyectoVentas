@@ -121,8 +121,8 @@ public class ColaClientes {
         cliente.generarFactura();
 
         List<String> rutaOptima = tienda.getMapaEntregas().reconstruirCamino(origen, destino, predecesores);
-        System.out.println(">>> RUTA DE ENTREGA ÓPTIMA: " + rutaOptima);
-        System.out.println(">>> DISTANCIA TOTAL: " + distancias.get(destino) + " km");
+        System.out.println("Ruta de entrega óptima: " + rutaOptima);
+        System.out.println("Distancia total de la ruta: " + distancias.get(destino) + " km");
 
         temp = cliente.getCarrito().getPrimero();
 

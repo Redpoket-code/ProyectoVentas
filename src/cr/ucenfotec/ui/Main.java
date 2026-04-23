@@ -29,7 +29,7 @@ public class Main {
             System.out.println("4. Atender siguiente cliente");
             System.out.println("5. Aumentar stock de producto");
             System.out.println("6. Agregar ubicacion al mapa");
-            System.out.println("7. Conectar ubicaiones (Aristas)");
+            System.out.println("7. Conectar ubicaciones");
             System.out.println("8. Mostrar Mapa Actual");
             System.out.println("9. Salir");
 
@@ -160,9 +160,25 @@ public class Main {
         System.out.print("Nombre: ");
         String nombre = entrada.readLine();
 
-        // Nueva funcionalidad: Ubicación
-        System.out.print("Ubicación del cliente (Vértice): ");
-        String ubicacion = entrada.readLine();
+        tienda.getMapaEntregas().mostrarSoloUbicaciones();
+
+        String ubicacion;
+        while (true) {
+            System.out.print("Ingrese la ubicación del cliente: ");
+            ubicacion = entrada.readLine();
+
+            if (ubicacion.trim().isEmpty()) {
+                System.out.println("La ubicación no puede estar vacía.");
+                continue;
+            }
+
+            if (tienda.getMapaEntregas().existeUbicacion(ubicacion)) {
+                break;
+            } else {
+                System.out.println("Error: La ubicación '" + ubicacion + "' no existe en el sistema. Verifique si esta escrita correctamente.");
+                tienda.getMapaEntregas().mostrarSoloUbicaciones();
+            }
+        }
 
         int prioridad = leerEntero("Prioridad (1-3): ");
         Cliente cliente = new Cliente(nombre, prioridad, ubicacion);
@@ -196,9 +212,7 @@ public class Main {
 
         } while(true);
 
-        tienda.getMapaEntregas().agregarVertice(ubicacion);
         tienda.getColaClientes().encolar(cliente);
-        System.out.println("Cliente encolado y ubicación registrada.");
 
         System.out.println("Cliente agregado a la cola correctamente.");
     }
