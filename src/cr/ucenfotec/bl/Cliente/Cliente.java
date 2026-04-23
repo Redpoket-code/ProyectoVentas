@@ -11,11 +11,12 @@ public class Cliente {
 
     private String nombre;
     private int prioridad;
+    private String ubicacion; //Atributo para Grafo
     private ListaProductos carrito;
 
     BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
 
-    public Cliente(String nombre, int prioridad) throws IOException {
+    public Cliente(String nombre, int prioridad, String ubicacion) throws IOException {
 
         while(prioridad < 1 || prioridad > 3){
             System.out.println("Prioridad inválida. Debe ser 1, 2 o 3.");
@@ -30,6 +31,7 @@ public class Cliente {
 
         this.nombre = nombre;
         this.prioridad = prioridad;
+        this.ubicacion = ubicacion; //para empezar la ubicación
         carrito = new ListaProductos();
     }
 
@@ -61,6 +63,8 @@ public class Cliente {
     public String getNombre() {
         return nombre;
     }
+
+    public String getUbicacion(){ return ubicacion; }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;

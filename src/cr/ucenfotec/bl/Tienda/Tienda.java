@@ -3,15 +3,25 @@ package cr.ucenfotec.bl.Tienda;
 import cr.ucenfotec.bl.ArbolProductos.ArbolProductos;
 import cr.ucenfotec.bl.Cliente.ColaClientes;
 import cr.ucenfotec.bl.Productos.Producto;
+import cr.ucenfotec.bl.Grafo.Grafo;
+
+import javax.swing.plaf.PanelUI;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Tienda {
 
     private ArbolProductos inventario;
     private ColaClientes colaClientes;
+    private Grafo mapaEntregas;
+    private final String UBICACION_TIENDA = "Tienda Central";
 
     public Tienda() {
         inventario = new ArbolProductos();
         colaClientes = new ColaClientes();
+        mapaEntregas = new Grafo();
+        mapaEntregas.agregarVertice("Tienda Central");
+        inicializarMapa();
     }
 
     // Getter
@@ -77,6 +87,8 @@ public class Tienda {
         return true;
     }
 
+    // 6. Aumentar Stock
+
     public void aumentarStock(String nombre, int cantidad) {
         boolean resultado = inventario.aumentarStock(nombre, cantidad);
 
@@ -86,4 +98,17 @@ public class Tienda {
             System.out.println("Producto no encontrado");
         }
     }
+
+    // 7. Iniciar Mapa
+    public void inicializarMapa(){
+        mapaEntregas.agregarArista("Tienda Central", "Sector Norte", 10);
+        mapaEntregas.agregarArista("Tienda Central", "Sector Sur", 15);
+        mapaEntregas.agregarArista("Sector Norte", "Sector Este", 5);
+        mapaEntregas.agregarArista("Sector Sur", "Sector Este", 20);
+    }
+
+    public Grafo getMapaEntregas() {return mapaEntregas; }
+    public String getUbicacionTienda(){return "Tienda Central"; }
+
+
 }

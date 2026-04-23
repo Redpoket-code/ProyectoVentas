@@ -6,6 +6,9 @@ import cr.ucenfotec.bl.Tienda.Tienda;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 
 public class ColaClientes {
 
@@ -61,6 +64,23 @@ public class ColaClientes {
             return;
         }
 
+        // --- Lógica para los grafos ---
+        String origen = tienda.getUbicacionTienda();
+        String destino = cliente.getUbicacion();
+
+        Map<String, Integer> distancias = new HashMap<>();
+        Map<String, String> predecesores = new HashMap<>();
+
+        //Aquí se ejecuta Dijkstra:
+        tienda.getMapaEntregas().algoritmoDijkstra(origen, distancias, predecesores);
+
+        if (distancias.get(destino) == null || distancias.get(destino) == Integer.MAX_VALUE) {
+            System.out.println("\n--- ERROR DE ENTREGA ---");
+            System.out.println("La ubicación '" + destino + "' está desconectada del mapa.");
+            System.out.println("No se puede atender al cliente hasta que haya una ruta.");
+            return;
+        }
+
         System.out.println("\n=== Cliente a atender ===");
         System.out.println("Nombre: " + cliente.getNombre());
         System.out.println("Prioridad: " + cliente.getPrioridad());
@@ -98,8 +118,11 @@ public class ColaClientes {
         }
 
         cliente = desencolar();
-
         cliente.generarFactura();
+
+        List<String> rutaOptima = tienda.getMapaEntregas().reconstruirCamino(origen, destino, predecesores);
+        System.out.println(">>> RUTA DE ENTREGA ÓPTIMA: " + rutaOptima);
+        System.out.println(">>> DISTANCIA TOTAL: " + distancias.get(destino) + " km");
 
         temp = cliente.getCarrito().getPrimero();
 

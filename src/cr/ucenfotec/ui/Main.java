@@ -28,7 +28,10 @@ public class Main {
             System.out.println("3. Crear cliente y agregar a cola");
             System.out.println("4. Atender siguiente cliente");
             System.out.println("5. Aumentar stock de producto");
-            System.out.println("6. Salir");
+            System.out.println("6. Agregar ubicacion al mapa");
+            System.out.println("7. Conectar ubicaiones (Aristas)");
+            System.out.println("8. Mostrar Mapa Actual");
+            System.out.println("9. Salir");
 
             opcion = leerEntero("Seleccione una opcion: ");
 
@@ -55,6 +58,18 @@ public class Main {
                     break;
 
                 case 6:
+                    agregarUbicacion();
+                    break;
+
+                case 7:
+                    conectarUbicaciones();
+                    break;
+
+                case 8:
+                    tienda.getMapaEntregas().mostrarGrafo();
+                    break;
+
+                case 9:
                     System.out.println("Saliendo del sistema...");
                     break;
 
@@ -62,7 +77,7 @@ public class Main {
                     System.out.println("Opción inválida");
             }
 
-        } while (opcion != 6);
+        } while (opcion != 9);
     }
 
     public static void agregarProducto() throws IOException {
@@ -145,9 +160,12 @@ public class Main {
         System.out.print("Nombre: ");
         String nombre = entrada.readLine();
 
-        int prioridad = leerEntero("Prioridad (1-3): ");
+        // Nueva funcionalidad: Ubicación
+        System.out.print("Ubicación del cliente (Vértice): ");
+        String ubicacion = entrada.readLine();
 
-        Cliente cliente = new Cliente(nombre, prioridad);
+        int prioridad = leerEntero("Prioridad (1-3): ");
+        Cliente cliente = new Cliente(nombre, prioridad, ubicacion);
 
         String opcion;
 
@@ -178,7 +196,9 @@ public class Main {
 
         } while(true);
 
+        tienda.getMapaEntregas().agregarVertice(ubicacion);
         tienda.getColaClientes().encolar(cliente);
+        System.out.println("Cliente encolado y ubicación registrada.");
 
         System.out.println("Cliente agregado a la cola correctamente.");
     }
@@ -227,5 +247,23 @@ public class Main {
                 System.out.println("Entrada inválida. Intente nuevamente.");
             }
         }
+    }
+
+    public static void agregarUbicacion() throws IOException {
+        System.out.print("Nombre de la nueva ubicación: ");
+        String nombre = entrada.readLine();
+        tienda.getMapaEntregas().agregarVertice(nombre);
+        System.out.println("Ubicación agregada.");
+    }
+
+    public static void conectarUbicaciones() throws IOException {
+        System.out.print("Ubicación de origen: ");
+        String origen = entrada.readLine();
+        System.out.print("Ubicación de destino: ");
+        String destino = entrada.readLine();
+        int distancia = leerEntero("Distancia entre ambas: ");
+
+        tienda.getMapaEntregas().agregarArista(origen, destino, distancia);
+        System.out.println("Ruta creada exitosamente.");
     }
 }
